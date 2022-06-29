@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CoreLMS.Core.Entities
 {
-    public class CourseLesson : IAuditableEntity
+    public class CourseLesson : IAuditableEntity, IEntity
     {
         public CourseLesson()
         {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CoreLMS.Core.DataTransferObjects
 {
-    public class CreateAuthorDto
+    public class CreateAuthorDto : IDto
     {
         [Required]
         public string FirstName { get; set; }

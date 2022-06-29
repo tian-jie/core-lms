@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CoreLMS.Application.Services;
+using AutoMapper;
+using CoreLMS.Core;
 
 namespace CoreLMS.Web
 {
@@ -32,9 +34,11 @@ namespace CoreLMS.Web
             services.AddDbContext<AppDbContext>();
 
             services.AddScoped<IAppDbContext, AppDbContext>();
+            //services.AddScoped<IRepository, Repository>();
 
-            services.AddTransient<ICourseService, CourseService>();
+            //services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IAuthorService, AuthorService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,9 @@ namespace CoreLMS.Web
             {
                 endpoints.MapRazorPages();
             });
+
+
+
         }
     }
 }

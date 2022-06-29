@@ -13,10 +13,10 @@ namespace CoreLMS.Core.Interfaces
 
         Task<Course> GetCourseAsync(int id);
 
-        Task<Course> AddCourseAsync(CreateCourseDto courseDto);
+        Task AddCourseAsync(CreateCourseDto courseDto);
 
-        Task<Course> UpdateCourseAsync(UpdateCourseDto courseDto);
+        Task UpdateCourseAsync(UpdateCourseDto courseDto);
 
-        Task<Course> DeleteCourseAsync(int id);
+        Task DeleteCourseAsync(int id);
     }
 }

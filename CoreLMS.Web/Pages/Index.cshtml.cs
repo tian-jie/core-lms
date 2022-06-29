@@ -19,7 +19,7 @@ namespace CoreLMS.Web.Pages
 
         public void OnGet()
         {
-
+            Response.Redirect("/admin/index");
         }
     }
 }

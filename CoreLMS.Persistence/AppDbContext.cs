@@ -1,5 +1,6 @@
 ﻿using CoreLMS.Core.Entities;
 using CoreLMS.Core.Interfaces;
+using Kevin.T.Clockify.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,11 +12,18 @@ using System.Threading.Tasks;
 
 namespace CoreLMS.Persistence
 {
-    public partial class AppDbContext : DbContext, IAppDbContext
+    public partial class AppDbContext : DbContext, IUnitOfWork, IAppDbContext
     {
         private readonly IConfiguration configuration;
 
-        public DbSet<AuthorCourseLesson> AuthorCourseLessons { get; set; }
+        private DbSet<AuthorCourseLesson> AuthorCourseLessons { get; set; }
+        private DbSet<SharePointPeople> SharePointPeople { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseLesson> CourseLessons { get; set; }
+        public DbSet<CourseLessonAttachment> CourseLessonAttachments { get; set; }
+        public DbSet<Author> Authors { get; set; }
+
 
         public AppDbContext(IConfiguration configuration)
         {
@@ -42,7 +50,7 @@ namespace CoreLMS.Persistence
                 .HasOne(p => p.Author)
                 .WithMany(p => p.CourseLessons)
                 .HasForeignKey(p => p.AuthorId);
-            
+
             modelBuilder.Entity<AuthorCourseLesson>()
                 .HasOne(p => p.CourseLesson)
                 .WithMany(p => p.Authors)
@@ -54,7 +62,7 @@ namespace CoreLMS.Persistence
             modelBuilder.Entity<Course>().HasQueryFilter(e => e.DateDeleted == null);
             modelBuilder.Entity<CourseLesson>().HasQueryFilter(e => e.DateDeleted == null);
             modelBuilder.Entity<CourseLessonAttachment>().HasQueryFilter(e => e.DateDeleted == null);
-            modelBuilder.Entity<Author>().HasQueryFilter(e => e.DateDeleted == null);            
+            modelBuilder.Entity<Author>().HasQueryFilter(e => e.DateDeleted == null);
             #endregion
         }
 
@@ -97,5 +105,7 @@ namespace CoreLMS.Persistence
                 }
             }
         }
+
+
     }
 }

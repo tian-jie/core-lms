@@ -25,7 +25,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
 
         public async Task OnGetAsync()
         {
-            var dbAuthors = await authorService.GetAuthorsAsync();
+            var dbAuthors = await authorService.GetAllAsync();
 
             this.Authors = dbAuthors.Select(p => new AuthorViewModel
             {

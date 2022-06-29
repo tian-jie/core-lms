@@ -30,7 +30,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
                 return NotFound();
             }
 
-            var dbAuthor = await authorService.GetAuthorAsync(id.Value);
+            var dbAuthor = await authorService.GetByIdAsync(id.Value);
 
             Author = new AuthorViewModel
             {

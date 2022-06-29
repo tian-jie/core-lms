@@ -35,7 +35,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
 
             try
             {
-                author = await authorService.GetAuthorAsync(id.Value);
+                author = await authorService.GetByIdAsync(id.Value);
             }
             catch (ApplicationException)
             {
@@ -65,7 +65,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
                 return NotFound();
             }
 
-            await authorService.DeleteAuthorAsync(AuthorDto.Id);
+            await authorService.DeleteByIdAsync(AuthorDto.Id);
 
             return RedirectToPage("./Index");
         }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CoreLMS.Core.DataTransferObjects
 {
-    public class CreateCourseDto
+    public class CreateCourseDto : IDto
     {
         [Required]
         public string Name { get; set; }

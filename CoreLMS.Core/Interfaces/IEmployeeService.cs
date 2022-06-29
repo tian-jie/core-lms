@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace CoreLMS.Core.Interfaces
 {
-    public interface IAuthorService : IBaseService<Author>
+    public interface IEmployeeService
     {
+        Task UpdateSharepointPeopleAsync(string date, string sharepointText);
+
 
     }
 }

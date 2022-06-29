@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoreLMS.Core.DataTransferObjects
 {
-    public class UpdateAuthorDto
+    public class UpdateAuthorDto : IDto
     {
         [Required]
         public int Id { get; set; }

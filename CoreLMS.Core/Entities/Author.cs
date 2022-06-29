@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CoreLMS.Core.Entities
 {
-    public class Author : IAuditableEntity
+    public class Author : IAuditableEntity, IEntity
     {
         public Author()
         {

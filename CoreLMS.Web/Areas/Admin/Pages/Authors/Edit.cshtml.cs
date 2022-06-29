@@ -37,7 +37,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
 
             try
             {
-                author = await authorService.GetAuthorAsync(id.Value);
+                author = await authorService.GetByIdAsync(id.Value);
             }
             catch (ApplicationException)
             {
@@ -71,7 +71,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
 
             try
             {
-                await authorService.UpdateAuthorAsync(AuthorDto);
+                await authorService.UpdateAsync(AuthorDto, AuthorDto.Id);
             }
             catch (ValidationException ex)
             {

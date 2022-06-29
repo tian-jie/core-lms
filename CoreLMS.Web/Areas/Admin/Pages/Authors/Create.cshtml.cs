@@ -35,8 +35,8 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Authors
             {
                 return Page();
             }
-
-            await authorService.AddAuthorAsync(AuthorDto);
+            
+            await authorService.AddAsync(AuthorDto);
 
             return RedirectToPage("./Index");
         }

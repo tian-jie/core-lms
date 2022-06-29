@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoreLMS.Core.Entities
 {
-    public class CourseLessonAttachment : IAuditableEntity
+    public class CourseLessonAttachment : IAuditableEntity, IEntity
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
