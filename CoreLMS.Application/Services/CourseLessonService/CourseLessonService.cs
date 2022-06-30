@@ -1,22 +1,14 @@
-﻿using CoreLMS.Core.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoreLMS.Core.Entities;
+using CoreLMS.Core.Interfaces;
 
 namespace CoreLMS.Application.Services.CourseLessonService
 {
-    public class CourseLessonService : ICourseLessonService
+    public class CourseLessonService : BaseService<CourseLesson>, ICourseLessonService
     {
-        private readonly IAppDbContext db;
-        private readonly ILogger<CourseService> logger;
-
-        public CourseLessonService(IAppDbContext db, ILogger<CourseService> logger)
+        public CourseLessonService(IAppDbContext unitOfWork)
+            : base(unitOfWork)
         {
-            this.db = db;
-            this.logger = logger;
+            
         }
 
     }

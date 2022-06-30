@@ -31,7 +31,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Courses
                 return Page();
             }
 
-            await courseService.AddCourseAsync(CourseDto);
+            await courseService.AddAsync(CourseDto);
 
             return RedirectToPage("./Index");
         }

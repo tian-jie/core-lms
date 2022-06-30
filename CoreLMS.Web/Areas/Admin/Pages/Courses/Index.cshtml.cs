@@ -30,7 +30,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Courses
             // 2. Map to "ViewModel"
             // 3. Return View
 
-            var dbCourses = await courseService.GetCoursesAsync();
+            var dbCourses = await courseService.GetAllAsync();
 
             this.Courses = dbCourses.Select(p => new CourseViewModel
             {

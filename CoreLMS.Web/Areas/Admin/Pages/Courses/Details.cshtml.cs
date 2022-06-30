@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CoreLMS.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using CoreLMS.Core.Entities;
-using CoreLMS.Persistence;
-using CoreLMS.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace CoreLMS.Web.Areas.Admin.Pages.Courses
 {
@@ -29,7 +23,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Courses
                 return NotFound();
             }
 
-            var dbCourse = await courseService.GetCourseAsync(id.Value);
+            var dbCourse = await courseService.GetByIdAsync(id.Value);
 
             Course = new CourseViewModel
             {

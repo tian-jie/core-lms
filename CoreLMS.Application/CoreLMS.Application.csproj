@@ -9,6 +9,7 @@
     <PackageReference Include="log4net" Version="2.0.14" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Z.EntityFramework.Extensions" Version="6.14.2" />
   </ItemGroup>
 
   <ItemGroup>

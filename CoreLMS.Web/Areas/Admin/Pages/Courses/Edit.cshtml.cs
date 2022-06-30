@@ -37,7 +37,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Courses
 
             try
             {
-                 course = await courseService.GetCourseAsync(id.Value);
+                 course = await courseService.GetByIdAsync(id.Value);
             }
             catch (ApplicationException)
             {
@@ -66,7 +66,7 @@ namespace CoreLMS.Web.Areas.Admin.Pages.Courses
 
             try
             {
-                await courseService.UpdateCourseAsync(CourseDto);
+                await courseService.UpdateAsync(CourseDto, CourseDto.Id);
             }
             catch (ValidationException ex)
             {

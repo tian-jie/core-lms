@@ -1,7 +1,7 @@
-﻿using CoreLMS.Persistence;
-using Microsoft.Extensions.Logging;
+﻿using CoreLMS.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 public interface IBaseService<TEntity> where TEntity : class, IEntity
@@ -17,6 +17,10 @@ public interface IBaseService<TEntity> where TEntity : class, IEntity
     Task DeleteByIdAsync(int id);
 
     Task UpdateAsync(IDto dto, int id);
+
+    Task DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate);
+
+    IAppDbContext UnitOfWork { get; }
 
 
 }

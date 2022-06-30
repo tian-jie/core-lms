@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -130,8 +129,8 @@ namespace CoreLMS.Persistence
         public virtual async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var objects = await WhereAsync(predicate);
-            _dbSet.RemoveRange(objects);
-            await ((DbContext)_unitOfWork).SaveChangesAsync();
+            var db = (DbContext)_unitOfWork;
+            await db.BulkDeleteAsync<TEntity>(objects);
 
             return 1;
         }

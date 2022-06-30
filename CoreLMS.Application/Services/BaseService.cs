@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using CoreLMS.Application.Validators;
+﻿using CoreLMS.Application.Validators;
 using CoreLMS.Core;
-using CoreLMS.Core.DataTransferObjects;
-using CoreLMS.Core.Entities;
 using CoreLMS.Core.Interfaces;
 using CoreLMS.Persistence;
 using log4net;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace CoreLMS.Application.Services
@@ -20,9 +15,20 @@ namespace CoreLMS.Application.Services
     {   
         internal readonly IRepository<TEntity> _repository;
         internal readonly ILog _logger = LogManager.GetLogger(typeof(BaseService<TEntity>));
+        IAppDbContext _unitOfWork;
+
+        public IAppDbContext UnitOfWork
+        {
+            get
+            {
+                return _unitOfWork;
+            }
+        }
+
         public BaseService(IAppDbContext unitOfWork)
         {
             _repository = new Repository<TEntity>(unitOfWork);
+            _unitOfWork = unitOfWork;
         }
 
         public virtual TEntity MapFrom(IDto dto)
@@ -92,6 +98,11 @@ namespace CoreLMS.Application.Services
             //}
 
             await _repository.DeleteAsync(a => a.Id == id);
+        }
+
+        public async Task DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            await _repository.DeleteAsync(predicate);
         }
 
         public async Task UpdateAsync(IDto dto, int id)
