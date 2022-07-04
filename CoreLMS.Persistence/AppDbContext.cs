@@ -23,8 +23,13 @@ namespace CoreLMS.Persistence
         public DbSet<CourseLesson> CourseLessons { get; set; }
         public DbSet<CourseLessonAttachment> CourseLessonAttachments { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<TimeEntry> TimeEntry { get; set; }
+        public DbSet<TimeEntry> TimeEntries { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Organize> Organizes { get; set; }
+        //public DbSet<Client> Clients { get; set; }
 
+        public DbSet<ProjectCost> ProjectCosts { get; set; }
 
         public AppDbContext(IConfiguration configuration)
         {

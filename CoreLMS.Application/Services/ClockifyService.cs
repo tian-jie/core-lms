@@ -1,11 +1,11 @@
-﻿using CoreLMS.Core.Interfaces;
+﻿using CoreLMS.Core.Entities;
+using CoreLMS.Core.Interfaces;
 using CoreLMS.Persistence;
 using Kevin.T.Clockify.Data.Entities;
 using Kevin.T.Clockify.Data.Models;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -217,7 +217,7 @@ namespace CoreLMS.Application.Services
             // TODO: 过滤掉已经有的employee
 
             // TODO: 看有没有不存在的项目，需要添加进来
-            var projects = (from tc in timeEntriesInClockify select new Project() { Gid = tc.projectId, Name = tc.projectName }).ToList();
+            //var projects = (from tc in timeEntriesInClockify select new Project() { Gid = tc.projectId, Name = tc.projectName }).ToList();
             // TODO: 过滤掉已经有的Project
 
         }

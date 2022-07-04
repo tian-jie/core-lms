@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kevin.T.Clockify.Data.Entities
+namespace CoreLMS.Core.Entities
 {
     [Table("project")]
     public class Project : IEntity
@@ -16,7 +16,7 @@ namespace Kevin.T.Clockify.Data.Entities
         /// <summary>
         /// Clockify里的id字符串
         /// </summary>
-        public virtual string Gid { get; set; }
+        public virtual string Code { get; set; }
 
         /// <summary>
         /// 项目名称
@@ -24,76 +24,56 @@ namespace Kevin.T.Clockify.Data.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// 客户ID，外键client表的GID
+        /// 项目经理
         /// </summary>
-        public string ClientId { get; set; }
+        [Column("project_manager")]
+        public int ProjectManager { get; set; }
+        
+        /// <summary>
+        /// 项目开始时间
+        /// </summary>
+        [Column("start_time")]
+        public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// workspace ID，外键workspace表的GID
+        /// 项目结束时间
         /// </summary>
-        public string WorkspaceId { get; set; }
+        [Column("end_time")]
+        public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// 颜色，无聊用的
+        /// 客户，非关联外键
         /// </summary>
-        public string Color { get; set; }
+        public int Client { get; set; }
 
         /// <summary>
-        /// 项目是否有收入的项目
+        /// 公司内部组织架构的组，非关联外键
         /// </summary>
-        public bool Billable { get; set; }
+        public int Team { get; set; }
 
         /// <summary>
-        /// 是否archive
+        /// 项目持续时长，天
         /// </summary>
-        public bool Archived { get; set; }
+        public int Duration { get; set; }
 
         /// <summary>
-        /// 项目周期信息
+        /// 项目状态，包括： Not Started / Projection / Ongoing / On Hold / Completed / Canceled 
         /// </summary>
-        public string Duration { get; set; }
+        [Column("project_status")]
+        public string ProjectStatus { get; set; }
 
         /// <summary>
-        /// 备注
+        /// 项目的商务状态，包括 签订前 (High/Medium/Low), 签订后 (Signed/Confirmed)，内部项目的(Misc.)
         /// </summary>
-        public string Note { get; set; }
+        [Column("business_status")]
+        public string BusinessStatus { get; set; }
 
         /// <summary>
-        /// 是否公开项目
+        /// 描述
         /// </summary>
-        public bool IsPublic { get; set; }
+        public string description { get; set; }
 
 
-
-        /// <summary>
-        /// 创建日期，框架直接调用
-        /// </summary>
-        [Column("created")]
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// 创建人ID，框架直接调用
-        /// </summary>
-        [Column("created_user")]
-        public string CreatedUserID { get; set; }
-
-        /// <summary>
-        /// 更新日期，框架直接调用
-        /// </summary>
-        [Column("updated")]
-        public DateTime UpdatedDate { get; set; }
-
-        /// <summary>
-        /// 更新人ID，框架直接调用
-        /// </summary>
-        [Column("updated_user")]
-        public string UpdatedUserID { get; set; }
-
-        /// <summary>
-        /// 逻辑删除，框架直接调用
-        /// </summary>
-        [Column("is_deleted")]
-        public bool IsDeleted { get; set; }
 
     }
 }
