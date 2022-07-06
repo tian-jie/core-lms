@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreLMS.Core.Entities
@@ -23,8 +22,8 @@ namespace CoreLMS.Core.Entities
         [Column("project_status")]
         public string ProjectStatus { get; set; }
 
-        [Column("year_date")]
-        public string YearDate { get; set; }
+        [Column("year_month")]
+        public int YearMonth { get; set; }
 
         [Column("employee_id")]
         public int EmployeeId { get; set; }
@@ -39,9 +38,10 @@ namespace CoreLMS.Core.Entities
         public string EmployeeTitleName { get; set; }
 
         [Column("total_amount")]
-        public int TotalAmount { get; set; }
+        public long TotalAmount { get; set; }
 
-
+        [Column("total_cost")]
+        public long TotalCost { get; set; }
 
     }
 }

@@ -1,0 +1,251 @@
+﻿@page
+@model CoreLMS.Web.Areas.Admin.Pages.Project.IndexModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Project Costs</h1>
+<h4>Click to expend details for each project</h4>
+<div style="height: 5rem;">
+    <input type="text" name="daterange" class="daterange" style="width: 20rem; text-align: center;right: 0.8rem;position:absolute;margin: 0.8rem" value="2022/01/01 ~ 2022/12/31" />
+</div>
+<div>
+    <table class="main-table"></table>
+</div>
+<table class="sub-table"></table>
+
+
+@section Styles{
+<link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+}
+
+@section Scripts{
+<script type="text/javascript" src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script language="javascript">
+    var startDate;
+    var endDate;
+    //function queryMainParams(params) {  //bootstrapTable自带参数  
+    //    params.startMonth = startDate;
+    //    params.endMonth = endDate;
+    //    params.pageSize = 100;
+    //    pageSize = 100;
+    //    return params;
+    //} 
+
+    $(function() {
+        $('.daterange').daterangepicker({
+            "showDropdowns": true,
+            "showWeekNumbers": true,
+            "showISOWeekNumbers": true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'This Year': [moment().startOf('year'), moment().endOf('month')],
+                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            },
+            "alwaysShowCalendars": true,
+            "startDate": moment().startOf('year'),
+            "endDate": moment().endOf('month'),
+            "opens": "left"
+        }, function(start, end, label) {
+            startDate = start.format('YYYYMM');
+            endDate = end.format('YYYYMM');
+            createMainTable(startDate, endDate);
+        });
+
+    });
+
+
+    function createMainTable(startDate, endDate){
+        console.log('creatMainTable');
+        $('.main-table').bootstrapTable('destroy').bootstrapTable({
+        columns: [
+        //    {
+        //    checkbox: true
+        //},
+        {
+            title: 'ID',
+            field: 'projectId',
+            align: 'center',
+        },
+        {
+            title: '项目名',
+            field: 'projectName',
+            align: 'left',
+            //formatter: function(value, row, index) {
+            //    //处理格式化数据
+            //}
+        },
+        {
+            title: 'Cost',
+            field: 'totalAmount',
+            align: 'right',
+        }],
+        url: "/api/project/get-all-project-cost?startMonth=" + startDate + "&endMonth=" + endDate,      //请求数据的地址URL
+        method: 'get',  //请求方式(*)
+        queryParams: function(params){
+            params.startMonth = startDate;
+            params.endMonth = endDate;
+            params.pageSize = 100;
+            pageSize = 100;
+            return params;
+        },
+        striped: true,  //是否显示行间隔色
+        cache: false,  //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性(*)
+        pagination: true,  //是否显示分页(*)
+        sortable: true,  //是否启用排序
+        sortOrder: "desc", //排序方式
+        sidePagination: "server",  //分页方式：client客户端分页，server服务端分页(*)
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 50,  //每页的记录行数(*)
+        pageList: [20, 50, 100],  //可供选择的每页的行数(*)
+        showColumns: false,  //是否显示所有的列
+        showRefresh: false,  //是否显示刷新按钮
+        minimumCountColumns: 2,  //最少允许的列数
+        clickToSelect: true,   //是否启用点击选中行
+        detailView: true,  //是否显示父子表    *关键位置*
+        queryParamsType: "limit",
+        contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+        checkboxHeader: true,
+        search: false,
+        singleSelect: true,
+        showColumns: false,  // 开启自定义列显示功能
+        //responseHandler: function responseHandler(sourceData) {
+        //    //这里要做分页，所以对返回的数据进行了处理
+        //    return {
+        //        "total": sourceData.total,  // 总条数
+        //        "rows": sourceData.rows // 返回的数据列表（后台返回一个list集合）
+        //    };
+        //},
+        queryParams: function queryParams(params) {
+            //设置查询参数,就是把页面需要查询的字段通过jquery取值后传到后台
+            var param = {
+                id: $("input[name='id']").val(),
+                name: $("input[name='name']").val(),
+                pageSize: params.limit, // 页面大小
+                pageNumber: (params.offset)/10+1 // 页码
+            };
+            return param;
+        },
+        // 注册加载子表的事件。你可以理解为点击父表中+号时触发的事件
+        onExpandRow: function(index, row, $detail) {
+            //这一步就是相当于在当前点击列下新创建一个table
+            createSubTable($detail.html('<table></table>').find('table'), startDate, endDate, row.projectId);
+
+        }
+        });
+    }
+    function createSubTable($detail, startDate, endDate, projectId){
+        $detail.bootstrapTable('destroy').bootstrapTable({
+        columns: [{
+            checkbox: true
+        },
+        {
+            title: 'Employee',
+            field: 'employeeName',
+            align: 'left',
+        },
+        {
+            title: 'Role',
+            field: 'employeeRoleTitle',
+            align: 'left'
+        },
+        {
+            title: 'Total Amount',
+            field: 'totalAmount',
+            align: 'center',
+        },
+        {
+            title: 'Total Cost',
+            field: 'totalCost',
+            align: 'center',
+        }],
+        url: "/api/project/get-project-cost-detail-by-project?startMonth=" + startDate + "&endMonth=" + endDate + "&projectId=" + projectId,      //请求数据的地址URL
+        method: 'get',  //请求方式(*)
+        striped: true,  //是否显示行间隔色
+        cache: false,  //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性(*)
+        pagination: false,  //是否显示分页(*)
+        sortable: false,  //是否启用排序
+        sortOrder: "desc", //排序方式
+        sidePagination: "server",  //分页方式：client客户端分页，server服务端分页(*)
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 20,  //每页的记录行数(*)
+        pageList: [20, 50, 100],  //可供选择的每页的行数(*)
+        showColumns: false,  //是否显示所有的列
+        showRefresh: false,  //是否显示刷新按钮
+        minimumCountColumns: 2,  //最少允许的列数
+        clickToSelect: true,   //是否启用点击选中行
+        detailView: false,  //是否显示父子表    *关键位置*
+        queryParamsType: "limit",
+        contentType: "application/json; charset=UTF-8",
+        checkboxHeader: false,
+        search: false,
+        singleSelect: true,
+        showColumns: false,  // 开启自定义列显示功能
+        //responseHandler: function responseHandler(sourceData) {
+        //    //这里要做分页，所以对返回的数据进行了处理
+        //    return {
+        //        "total": sourceData.total,  // 总条数
+        //        "rows": sourceData.rows // 返回的数据列表（后台返回一个list集合）
+        //    };
+        //},
+        queryParams: function queryParams(params) {
+            //设置查询参数,就是把页面需要查询的字段通过jquery取值后传到后台
+            var param = {
+                id: $("input[name='id']").val(),
+                name: $("input[name='name']").val(),
+                pageSize: params.limit, // 页面大小
+                pageNumber: (params.offset)/10+1 // 页码
+            };
+            return param;
+        },
+        //注册加载子表的事件。你可以理解为点击父表中+号时触发的事件
+        onExpandRow: function(index, row, $detail) {
+            //这一步就是相当于在当前点击列下新创建一个table
+            var cur_table = $detail.html('<table></table>').find('table');
+            var html = "";
+            html += "<table class='table'>";
+            html += "<thead>";
+            html += "<tr style='height: 40px;'>";
+            html += "<th>用户id</th>";
+            html += "<th>用户姓名</th>";
+            html += "</tr>";
+            html += "</thead>";
+            $.ajax({
+                type: "post",
+                url: "user/list",       //子表请求的地址
+                data: {id:row.id,name:row.name},//我这里是点击父表后，传递父表列id和nama到后台查询子表数据
+                async: false,           //很重要，这里要使用同步请求
+                success: function(data) {
+                    html += '<ul class="list-group" >';
+                    //遍历子表数据
+                    $.each(data.rows,
+                    function(n, value) {
+                        html += "<tr  align='center'>"
+                            + "<td>" + value.id + "</td>"
+                            + "<td>" + value.name + "</td>"
+                            + "</tr>";
+                    });
+                    html += '</table>';
+                    $detail.html(html); // 关键地方
+                }
+            });
+        }
+        });
+
+ 
+    }
+    
+
+</script>
+
+}

@@ -2,7 +2,6 @@
 using CoreLMS.Core.Types;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CoreLMS.Core.Entities
 {

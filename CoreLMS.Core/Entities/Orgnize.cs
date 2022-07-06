@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreLMS.Core.Entities
 {
-    [Table("orgnize")]
-    public class Orgnize : IEntity
+    [Table("organize")]
+    public class Organize : IEntity
     {
         /// <summary>
         /// 主键ID

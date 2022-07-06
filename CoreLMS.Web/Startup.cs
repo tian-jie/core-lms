@@ -1,24 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CoreLMS.Application.Services;
 using CoreLMS.Core.Interfaces;
 using CoreLMS.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using CoreLMS.Application.Services;
-using AutoMapper;
-using CoreLMS.Core;
+using Microsoft.Extensions.Logging;
+
 
 namespace CoreLMS.Web
 {
     public class Startup
     {
+        public static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
+        {
+        //#if DEBUG
+            builder.AddConsole();
+        //#endif
+        });
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,7 +34,10 @@ namespace CoreLMS.Web
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddSwagger();
 
-            services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>(options=>
+            {
+                options.UseLoggerFactory(_loggerFactory);
+            });
 
             services.AddScoped<IAppDbContext, AppDbContext>();
             //services.AddScoped<IRepository, Repository>();
@@ -42,6 +46,11 @@ namespace CoreLMS.Web
             services.AddTransient<IClockifyService, ClockifyService>();
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IProjectCostService, ProjectCostService>();
+            services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IRoleTitleService, RoleTitleService>();
+
 
         }
 

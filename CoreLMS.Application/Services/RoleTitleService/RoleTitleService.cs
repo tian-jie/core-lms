@@ -1,22 +1,15 @@
 ﻿using CoreLMS.Core.Entities;
 using CoreLMS.Core.Interfaces;
-using CoreLMS.Persistence;
-using Microsoft.Extensions.Logging;
 
-namespace CoreLMS.Application.Services.CourseLessonService
+namespace CoreLMS.Application.Services
 {
-    public class RoleTitleService : IRoleTitleService
+    public class RoleTitleService : BaseService<RoleTitle>, IRoleTitleService
     {
-        private readonly IRepository<RoleTitle> _repository;
-        private readonly ILogger<RoleTitleService> logger;
-
-        public RoleTitleService(IRepository<RoleTitle> repository, ILogger<RoleTitleService> logger)
+        public RoleTitleService(IAppDbContext unitOfWork)
+            : base(unitOfWork)
         {
-            this._repository = repository;
-            this.logger = logger;
+
         }
-
-
 
     }
 }

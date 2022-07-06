@@ -3,7 +3,6 @@ using CoreLMS.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace CoreLMS.Core.Entities
 {

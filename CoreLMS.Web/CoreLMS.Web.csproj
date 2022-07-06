@@ -1,5 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>cbf90f8d-f8a2-4bd2-91bf-24d985c7b106</UserSecretsId>

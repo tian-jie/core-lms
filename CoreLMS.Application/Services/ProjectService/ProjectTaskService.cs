@@ -1,19 +1,14 @@
 ﻿using CoreLMS.Core.Entities;
 using CoreLMS.Core.Interfaces;
-using CoreLMS.Persistence;
-using Microsoft.Extensions.Logging;
 
-namespace CoreLMS.Application.Services.CourseLessonService
+namespace CoreLMS.Application.Services
 {
-    public class ProjectTaskService : IProjectTaskService
+    public class ProjectTaskService : BaseService<ProjectTask>, IProjectTaskService
     {
-        private readonly IRepository<ProjectTask> _repository;
-        private readonly ILogger<ProjectTaskService> logger;
-
-        public ProjectTaskService(IRepository<ProjectTask> repository, ILogger<ProjectTaskService> logger)
+        public ProjectTaskService(IAppDbContext unitOfWork)
+            : base(unitOfWork)
         {
-            this._repository = repository;
-            this.logger = logger;
+
         }
 
 

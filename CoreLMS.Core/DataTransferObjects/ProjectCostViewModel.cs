@@ -8,7 +8,7 @@
 
         public string YearDate { get; set; }
 
-        public int TotalAmount { get; set; }
+        public long TotalAmount { get; set; }
 
     }
 }

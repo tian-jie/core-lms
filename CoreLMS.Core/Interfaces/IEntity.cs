@@ -1,4 +1,6 @@
-﻿public interface IEntity
+﻿using System;
+
+public interface IEntity
 {
     int Id { get; set; }
 }

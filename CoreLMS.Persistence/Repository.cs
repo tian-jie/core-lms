@@ -40,7 +40,9 @@ namespace CoreLMS.Persistence
         {
             return await Task.Run(() =>
             {
-                return _dbSet.Where<TEntity>(predicate).AsQueryable<TEntity>();
+                var result = _dbSet.Where<TEntity>(predicate).AsQueryable<TEntity>();
+                var sql = result.ToQueryString();
+                return result;
             });
         }
 

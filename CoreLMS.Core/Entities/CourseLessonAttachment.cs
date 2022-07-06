@@ -1,7 +1,5 @@
 ﻿using CoreLMS.Core.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CoreLMS.Core.Entities
 {

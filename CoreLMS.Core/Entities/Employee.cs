@@ -11,67 +11,54 @@ namespace Kevin.T.Clockify.Data.Entities
         /// 主键ID
         /// </summary>
         [Key]
+        [Column("id")]
         public int Id { get; set; }
 
         /// <summary>
         /// Clockify里的id字符串
         /// </summary>
+        [Column("gid")]
         public virtual string Gid { get; set; }
 
         /// <summary>
         /// 邮箱
         /// </summary>
+        [Column("email")]
         public string Email { get; set; }
 
         /// <summary>
         /// 员工姓名
         /// </summary>
+        [Column("name")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// 员工头像
-        /// </summary>
-        public string ProfilePicture { get; set; }
 
-        /// <summary>
-        /// 默认workspace，借用clockify里的概念
-        /// </summary>
-        public string DefaultWorkspace { get; set; }
+        [Column("function")]
+        public string Function { get; set; }
 
-        /// <summary>
-        /// 员工状态
-        /// </summary>
+        [Column("location")]
+        public string Location { get; set; }
+
+        [Column("team")]
+        public int Team { get; set; }
+
+        [Column("title")]
+        public int Title { get; set; }
+
+        [Column("employeement")]
+        public int Employeement { get; set; }
+
+        [Column("date_join")]
+        public DateTime DateJoin { get; set; }
+
+        [Column("date_left")]
+        public DateTime DateLeft { get; set; }
+
+        [Column("status")]
         public string Status { get; set; }
 
-        /// <summary>
-        /// 创建日期，框架直接调用
-        /// </summary>
-        [Column("created")]
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// 创建人ID，框架直接调用
-        /// </summary>
-        [Column("created_user")]
-        public string CreatedUserID { get; set; }
-
-        /// <summary>
-        /// 更新日期，框架直接调用
-        /// </summary>
-        [Column("updated")]
-        public DateTime UpdatedDate { get; set; }
-
-        /// <summary>
-        /// 更新人ID，框架直接调用
-        /// </summary>
-        [Column("updated_user")]
-        public string UpdatedUserID { get; set; }
-
-        /// <summary>
-        /// 逻辑删除，框架直接调用
-        /// </summary>
-        [Column("is_deleted")]
-        public bool IsDeleted { get; set; }
+        [Column("memo")]
+        public string Memo { get; set; }
 
     }
 }
